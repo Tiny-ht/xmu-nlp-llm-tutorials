@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+BUNDLER_VERSION="2.5.9"
+RUBY_SERIES="3.3.0"
+
+discover_ruby_prefix() {
+  if [[ -n "${RUBY_PREFIX:-}" ]]; then
+    printf '%s\n' "$RUBY_PREFIX"
+    return
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    brew --prefix ruby@3.3 2>/dev/null || true
+    return
+  fi
+
+  printf '\n'
+}
+
+ensure_ruby() {
+  local ruby_prefix
+  ruby_prefix="$(discover_ruby_prefix)"
+
+  if [[ -z "$ruby_prefix" || ! -x "$ruby_prefix/bin/ruby" ]]; then
+    cat >&2 <<'EOF'
+Homebrew Ruby 3.3 is required for this site.
+
+Install it with:
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install ruby@3.3
+EOF
+    exit 1
+  fi
+
+  export LANG="en_US.UTF-8"
+  export LC_ALL="en_US.UTF-8"
+  export GEM_HOME="$ROOT_DIR/.gem/ruby/$RUBY_SERIES"
+  export GEM_PATH="$GEM_HOME"
+  export PATH="$ruby_prefix/bin:$GEM_HOME/bin:$PATH"
+}
+
+ensure_bundle() {
+  if ! gem list -i bundler -v "$BUNDLER_VERSION" >/dev/null 2>&1; then
+    gem install bundler -v "$BUNDLER_VERSION" --no-document
+  fi
+
+  bundle "_${BUNDLER_VERSION}_" config set --local path vendor/bundle >/dev/null
+
+  if ! bundle "_${BUNDLER_VERSION}_" check >/dev/null 2>&1; then
+    bundle "_${BUNDLER_VERSION}_" install
+  fi
+}
+
+run_bundle_exec() {
+  ensure_ruby
+  ensure_bundle
+  bundle "_${BUNDLER_VERSION}_" exec "$@"
+}
+
+case "${1:-help}" in
+  bootstrap)
+    ensure_ruby
+    ensure_bundle
+    ;;
+  build)
+    shift
+    run_bundle_exec jekyll build "$@"
+    ;;
+  serve)
+    shift
+    run_bundle_exec jekyll serve "$@"
+    ;;
+  exec)
+    shift
+    run_bundle_exec "$@"
+    ;;
+  *)
+    cat >&2 <<'EOF'
+Usage:
+  bin/site bootstrap
+  bin/site build [jekyll build args]
+  bin/site serve [jekyll serve args]
+  bin/site exec <command>
+EOF
+    exit 1
+    ;;
+esac

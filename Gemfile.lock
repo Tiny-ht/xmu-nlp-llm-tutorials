@@ -79,6 +79,8 @@ GEM
       logger
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
+    faraday-retry (2.4.0)
+      faraday (~> 2.0)
     ffi (1.17.3-arm64-darwin)
     ffi (1.17.3-x86_64-linux-gnu)
     fiber-annotation (0.2.0)
@@ -253,6 +255,7 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   csv
+  faraday-retry
   html-proofer (~> 5.2)
   jekyll-github-metadata (>= 2.15)
   jekyll-include-cache

@@ -1,1 +1,84 @@
 // custom SCSS (or CSS) goes here
+
+.site-title {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.95rem !important;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 31.25rem) {
+  .site-title {
+    font-size: 0.95rem !important;
+    line-height: 1.15;
+  }
+}
+
+.doc-screenshot {
+  display: block;
+  width: min(82%, 880px);
+  margin: 0.75rem 0 1rem;
+  border: 1px solid #d8dee6;
+  border-radius: 10px;
+}
+
+.doc-screenshot--narrow {
+  width: min(46%, 480px);
+}
+
+@media (max-width: 50rem) {
+  .doc-screenshot,
+  .doc-screenshot--narrow {
+    width: 100%;
+  }
+}
+
+.home-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.home-nav__title {
+  margin-bottom: 0.2rem;
+  color: #111827;
+  font-weight: 700;
+}
+
+.home-nav__item {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #d8dee6;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1f2937;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.home-nav__item:hover {
+  border-color: #b6c2d0;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.home-nav__item--muted {
+  background: #f6f8fb;
+  color: #6b7280;
+  border-style: dashed;
+  cursor: default;
+}
+
+.home-nav__item--muted:hover {
+  border-color: #d8dee6;
+  box-shadow: none;
+  transform: none;
+}
