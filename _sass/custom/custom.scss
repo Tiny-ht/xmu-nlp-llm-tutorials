@@ -82,3 +82,55 @@
   box-shadow: none;
   transform: none;
 }
+
+.nav-list .nav-list-item.nav-list-item--page-sections.active > .nav-list.nav-list--page-sections {
+  display: none;
+}
+
+.nav-list .nav-list-item.nav-list-item--page-sections.sidebar-page-nav-open > .nav-list.nav-list--page-sections {
+  display: block;
+}
+
+.nav-list-link--page-toggle {
+  cursor: pointer;
+}
+
+.nav-list--page-sections {
+  margin-top: 0.15rem;
+}
+
+.nav-list .nav-list-item > .nav-list--page-sections {
+  padding-left: $sp-1;
+}
+
+.nav-list--page-sections .nav-list-link--page-section {
+  min-height: auto;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-right: $sp-2;
+  padding-left: $sp-2;
+  line-height: 1.45;
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+.nav-list--page-sections .nav-list-item--page-section--h2 > .nav-list-link--page-section {
+  font-weight: 600;
+}
+
+.nav-list--page-sections .nav-list-item--page-section--h3 > .nav-list-link--page-section {
+  font-size: 0.92em;
+}
+
+.nav-list--page-subsections {
+  margin-top: 0.15rem;
+}
+
+.nav-list .nav-list-item > .nav-list--page-sections > .nav-list-item--page-section > .nav-list--page-subsections {
+  padding-left: $sp-2;
+}
+
+.nav-list--page-subsections .nav-list-link--page-section {
+  padding-left: $sp-3;
+}
