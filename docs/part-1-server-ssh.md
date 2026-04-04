@@ -84,6 +84,8 @@ Remote - SSH
    ssh -p 58003 user@hpc.wisesoe.com
    ```
 
+   其中 `user` 改为你自己的用户名。
+
    如果你当前在校园网内，可改用：
 
    ```bash
